@@ -20,13 +20,11 @@ WORKDIR /edx/app/edx_ansible/edx_ansible/docker/plays
 
 RUN apt-get update
 
-COPY docker/build/devpi/ansible_overrides.yml /
 COPY docker/build/devstack/ansible_overrides.yml /devstack/ansible_overrides.yml
 
 RUN sudo /edx/app/edx_ansible/venvs/edx_ansible/bin/ansible-playbook devpi.yml \
     -c local -i '127.0.0.1,' \
     -t "install,devstack" \
-    --extra-vars="@/ansible_overrides.yml" \
     --extra-vars="@/devstack/ansible_overrides.yml" \
     --extra-vars="DEVPI_SERVER_VERSION=$ARG_DEVPI_SERVER_VERSION" \
     --extra-vars="DEVPI_WEB_VERSION=$ARG_DEVPI_WEB_VERSION" \
